@@ -1,0 +1,86 @@
+# API MercadoAgro
+
+Este README describe las diferentes funcionalidades disponibles en la API de MercadoAgro, junto con instrucciones sobre cómo utilizar los distintos endpoints para interactuar con la base de datos del proyecto.
+
+## Endpoints Disponibles
+
+### 1. `/api/create_tables.php`
+- **Descripción:** Crea las tablas necesarias para la base de datos del proyecto.
+- **Método:** GET
+- **Parámetros opcionales:** `cleanrestart` (boolean) - Si se pasa `true`, elimina la base de datos existente y la crea nuevamente.
+
+### 2. `/api/dbTest.php`
+- **Descripción:** Prueba la conexión a la base de datos.
+- **Método:** GET
+
+### 3. `/api/getProducts.php`
+- **Descripción:** Obtiene la lista de productos disponibles.
+- **Método:** GET
+
+### 4. `/api/info.php`
+- **Descripción:** Proporciona información general del servidor y su configuración.
+- **Método:** GET
+
+### 5. `/api/insertProduct.php`
+- **Descripción:** Inserta un nuevo producto en la base de datos.
+- **Método:** POST
+- **Parámetros:**
+  - `name` (string): Nombre del producto.
+  - `description` (string): Descripción del producto.
+  - `price` (float): Precio del producto.
+  - `quantity` (int): Cantidad disponible.
+
+### 6. `/api/insertDemo.php`
+- **Descripción:** Inserta datos de demostración en la base de datos.
+- **Método:** POST
+
+### 7. `/api/login.php`
+- **Descripción:** Inicia sesión en la plataforma.
+- **Método:** POST
+- **Parámetros:**
+  - `identifier` (string): Correo electrónico o nombre de usuario.
+  - `password` (string): Contraseña del usuario (en texto plano).
+
+### 8. `/api/register.php`
+- **Descripción:** Registra un nuevo usuario en la plataforma.
+- **Método:** POST
+- **Parámetros:**
+  - `username` (string): Nombre de usuario.
+  - `email` (string): Correo electrónico del usuario.
+  - `password` (string): Contraseña del usuario.
+  - `firstname` (string): Nombre del usuario.
+  - `lastname` (string): Apellido del usuario.
+
+### 9. `/api/setup.php`
+- **Descripción:** Crea un usuario administrador y elimina todos los usuarios excepto el administrador.
+- **Método:** GET
+
+## Archivos Relacionados
+
+### `.env`
+- Contiene las configuraciones de entorno, como la contraseña del usuario administrador.
+- **Variables de entorno:**
+  - `REACT_DB_USER`: Nombre de usuario para la base de datos (por defecto: `mercadoagro`).
+  - `REACT_DB_DBNAME`: Nombre de la base de datos (por defecto: `mercadoagro`).
+  - `ADMIN_PASSWORD`: Contraseña del administrador (por defecto: `clavechangeme`).
+  - `REACT_DB_PASSWORD`: Contraseña para la base de datos (por defecto: `clavechangeme`).
+
+### `db.php`
+- Archivo de conexión a la base de datos. Asegura que todos los endpoints puedan interactuar con la base de datos.
+
+## Notas de Seguridad
+- **Contraseñas:** Las contraseñas se almacenan en la base de datos utilizando un hash seguro (bcrypt). No se envían contraseñas encriptadas desde el frontend; el hashing se realiza en el servidor para mayor seguridad.
+- **CORS:** El header `Access-Control-Allow-Origin` está habilitado para permitir solicitudes desde cualquier origen. Asegúrate de limitar esto en producción para mejorar la seguridad.
+
+## Requisitos
+- **PHP:** Versión 7.2 o superior.
+- **Base de datos:** MariaDB/MySQL.
+
+## Cómo Empezar
+1. **Clonar el repositorio** y asegúrate de que los archivos de la API estén en el directorio correcto.
+2. **Configuración del entorno:** Modifica el archivo `.env` con las credenciales correctas para conectarte a la base de datos.
+3. **Ejecutar `create_tables.php`:** Para crear las tablas necesarias en la base de datos, ejecuta el script con el parámetro `cleanrestart` si necesitas reiniciar la base de datos desde cero.
+
+## Contacto
+Para cualquier problema o pregunta relacionada con la API, contacta al equipo de soporte a través del correo electrónico `soporte@mercadoagro.cl`.
+

@@ -1,0 +1,3 @@
+CREATE DATABASE mercadoagro DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'mercadoagro'@'localhost' IDENTIFIED BY 'P0seid0n.P0MAma';
+GRANT ALL ON mercadoagro .* TO 'mercadoagro'@'localhost' IDENTIFIED BY 'P0seid0n.P0MAma' WITH GRANT OPTION;

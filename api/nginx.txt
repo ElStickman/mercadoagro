@@ -1,0 +1,44 @@
+server {
+    listen 80;
+    server_name localhost;
+
+    # Redirige el tráfico hacia el cliente React
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Configuración para manejar archivos PHP en la ruta /api
+    location /api {
+        root /home/mercadoagro/mercadoagro/;  # Ajusta esta ruta según donde estén tus archivos PHP
+        index index.php;
+        try_files $uri $uri/ /index.php?$query_string;
+
+        # Configuración para los scripts PHP
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;  # Asegúrate de que esta ruta sea correcta
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+    }
+
+    # Configuración para manejar archivos PHP en la ruta /api
+    location /phpmyadmin {
+        root /var/www/html;  # Ajusta esta ruta según donde estén tus archivos PHP
+        index index.php;
+        try_files $uri $uri/ /index.php?$query_string;
+
+        # Configuración para los scripts PHP
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;  # Asegúrate de que esta ruta sea correcta
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+    }
+}
