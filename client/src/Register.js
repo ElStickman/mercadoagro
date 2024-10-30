@@ -34,16 +34,19 @@ function Register({ setUser }) {  // Recibir setUser como prop
       const data = await response.json();
 
       if (response.ok && data.success) {
-        // Guardar el token en localStorage (si se proporciona)
-        if (data.token) {
-          localStorage.setItem('token', data.token);
+        console.log('Usuario registrado:', data.user); // Debug: Verificar usuario recibido
+
+        // Actualizar el estado del usuario y hacer login automáticamente
+        const newUser = data.user;
+        if (newUser) {
+          setUser(newUser);
+          localStorage.setItem('user', JSON.stringify(newUser));
+
+          // Redirigir al usuario a la página principal
+          navigate('/');
+        } else {
+          setMessage('No se pudo obtener la información del usuario. Intenta nuevamente.');
         }
-
-        // Actualizar el estado del usuario
-        setUser({ username: data.username });
-
-        // Redirigir al usuario a la página de éxito
-        navigate('/success');
       } else {
         // Mostrar mensaje de error si el nombre de usuario o correo ya existen
         setMessage(data.message || 'Error al registrar el usuario');
